@@ -41,13 +41,29 @@ You need Claude Code 2.1.295 or newer (the mod API is early access and may chang
 
 ### Option 1: install straight from this repository (CLI)
 
-cold-cache is not listed in any public plugin directory. Instead, this repository carries its own `.claude-plugin/marketplace.json`, so Claude Code can install from it directly. In a Claude Code terminal session, type:
+cold-cache is not listed in any public plugin directory. Instead, this repository carries its own `.claude-plugin/marketplace.json`, so Claude Code can add it as a plugin source and install from it. Two steps, typed into a Claude Code terminal session:
 
 ```
-/plugin install cold-cache --marketplace mrkshw/cold-cache
+/plugin marketplace add mrkshw/cold-cache
 ```
 
-Claude Code asks whether to add `mrkshw/cold-cache` as a plugin source: answer `y`, then choose the **user** scope. Installed at user scope, it also loads in the desktop app's Code tab.
+```
+/plugin install cold-cache@cold-cache
+```
+
+Choose the **user** scope when asked. Installed at user scope, it also loads in the desktop app's Code tab.
+
+The same from a shell, outside a session:
+
+```powershell
+claude plugin marketplace add mrkshw/cold-cache
+```
+
+```powershell
+claude plugin install cold-cache@cold-cache --scope user
+```
+
+To update later, run `claude plugin marketplace update cold-cache`, then `/reload-plugins` in an open session.
 
 ### Option 2: from a clone
 
