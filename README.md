@@ -6,6 +6,8 @@ Claude caches the conversation it has already read. Leave a session idle past th
 
 cold-cache puts a band above the prompt once the session has been idle past the threshold. In the desktop app's Code tab:
 
+<img width="1157" height="79" alt="image" src="https://github.com/user-attachments/assets/c8b11b8f-414d-4c85-9a76-b5ce4f55a6d6" />
+
 In the terminal:
 
 <img width="845" height="72" alt="image" src="https://github.com/user-attachments/assets/ccfd29a0-2f9f-49cd-8164-6192ca86bff9" />
