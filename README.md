@@ -11,7 +11,7 @@ cold-cache puts a band above the prompt once the session has been idle past the 
   1: Handoff   2: Compact with Haiku   0: Dismiss
 ```
 
-- **Handoff** (recommended for long sessions): Claude Haiku reads the conversation and writes a handoff document to your OS temp folder. The band then offers **Clear & continue** (copies the resume prompt, runs `/clear`, and fills `Read the handoff at <path> first.` into the prompt box) or **Copy prompt** (copy only, for picking up in another session or window).
+- **Handoff** (recommended for long sessions): Claude Haiku reads the conversation and writes a handoff document to your OS temp folder. The band then offers **Clear & continue** (copies a resume prompt, runs `/clear`, and fills the prompt box with it: the new session reads the handoff, opens with a **Where we were** recap for you, and proposes the next step) or **Copy prompt** (copy only, for picking up in another session or window).
 - **Compact with Haiku**: compacts the conversation in place, with Haiku writing the summary instead of your main model.
 - **Dismiss**: hides the band until the cache goes cold again. Sending any message also hides it.
 

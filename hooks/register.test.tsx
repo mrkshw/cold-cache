@@ -158,9 +158,11 @@ test('clear & continue copies the prompt, clears, and refills the prompt box', O
   await band.press({ key: 'handoff' })
   await band.press({ key: 'continue' })
 
-  expect(events[0]).toMatch(/^copy:Read the handoff at C:\\Temp\\handoff-.*\.md first\.$/)
+  expect(events[0]).toMatch(/^copy:/)
+  expect(events[0]).toMatch(/C:\\Temp\\handoff-.*\.md/)
+  expect(events[0]).toContain('Where we were')
   expect(events[1]).toBe('run:clear')
-  expect(events[2]).toMatch(/^fill:Read the handoff at /)
+  expect(events[2]).toBe(`fill:${events[0]?.slice('copy:'.length)}`)
 })
 
 test('a failed Haiku call says why and offers a retry', OPTIONS, async ($, on) => {
