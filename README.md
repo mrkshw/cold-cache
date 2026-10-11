@@ -6,7 +6,8 @@ Claude caches the conversation it has already read. Leave a session idle past th
 
 cold-cache puts a band above the prompt once the session has been idle past the threshold. In the desktop app's Code tab:
 
-![The cold-cache band above the prompt in the Claude desktop app, reading "Cache cold, next message re-reads 373k tokens uncached", with Handoff, Compact with Haiku and Dismiss buttons](docs/desktop-banner.png)
+![The cold-cache band above the prompt in the Claude desktop app, reading "Cache cold, next message re-reads 373k tokens uncached", with Handoff, Compact with Haiku and Dismiss buttons](<img width="1164" height="73" alt="image" src="https://github.com/user-attachments/assets/c3f48e34-e4bd-4483-b0e3-5aa9817e9a93" />
+)
 
 In the terminal:
 
