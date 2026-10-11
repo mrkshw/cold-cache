@@ -1,0 +1,16 @@
+{
+  "name": "cold-cache",
+  "version": "0.1.0",
+  "description": "Warns above the prompt when a conversation's prompt cache has gone cold, and offers a Haiku-written handoff or compaction instead of an expensive uncached re-read.",
+  "author": { "name": "Mark Shaw" },
+  "license": "MIT",
+  "types": "./types/index.d.ts",
+  "userConfig": {
+    "thresholdMinutes": {
+      "type": "number",
+      "title": "Idle minutes before the cache counts as cold",
+      "description": "Match your prompt cache TTL: 60 for a 1-hour cache, 5 for the default 5-minute cache.",
+      "default": 60
+    }
+  }
+}

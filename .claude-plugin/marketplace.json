@@ -1,0 +1,15 @@
+{
+  "name": "cold-cache",
+  "owner": {
+    "name": "Mark Shaw"
+  },
+  "metadata": {
+    "description": "cold-cache: warns when a Claude Code session's prompt cache has gone cold, with a Haiku-written handoff or compaction."
+  },
+  "plugins": [
+    {
+      "name": "cold-cache",
+      "source": "./"
+    }
+  ]
+}
