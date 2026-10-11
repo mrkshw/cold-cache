@@ -4,7 +4,11 @@ A Claude Code mod that warns you when a conversation's prompt cache has gone col
 
 Claude caches the conversation it has already read. Leave a session idle past the cache's lifetime (1 hour or 5 minutes, depending on your account) and the next message re-reads the entire context at full, uncached input price. On a long session that is the most expensive message you will send all day, and nothing in the UI tells you.
 
-cold-cache puts a band above the prompt once the session has been idle past the threshold:
+cold-cache puts a band above the prompt once the session has been idle past the threshold. In the desktop app's Code tab:
+
+![The cold-cache band above the prompt in the Claude desktop app, reading "Cache cold, next message re-reads 373k tokens uncached", with Handoff, Compact with Haiku and Dismiss buttons](docs/desktop-banner.png)
+
+In the terminal:
 
 ```
 ❄︎ Cache cold · next message re-reads 342k tokens uncached
