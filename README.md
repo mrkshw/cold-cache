@@ -39,15 +39,15 @@ Haiku calls go through your own Claude Code session's account and credentials, b
 
 You need Claude Code 2.1.295 or newer (the mod API is early access and may change between releases).
 
-### Option 1: plugin marketplace (CLI)
+### Option 1: install straight from this repository (CLI)
 
-In a Claude Code terminal session, type:
+cold-cache is not listed in any public plugin directory. Instead, this repository carries its own `.claude-plugin/marketplace.json`, so Claude Code can install from it directly. In a Claude Code terminal session, type:
 
 ```
 /plugin install cold-cache --marketplace mrkshw/cold-cache
 ```
 
-Answer `y` to add the marketplace, then choose the **user** scope. Installed at user scope, it also loads in the desktop app's Code tab.
+Claude Code asks whether to add `mrkshw/cold-cache` as a plugin source: answer `y`, then choose the **user** scope. Installed at user scope, it also loads in the desktop app's Code tab.
 
 ### Option 2: from a clone
 
@@ -77,7 +77,7 @@ Several folders are separated by `;` on Windows and `:` on macOS and Linux. Rest
 
 ### Option 3: bundling it into a team toolkit
 
-If you maintain your own marketplace, add an entry pointing at this repository:
+If your team keeps its own plugin source (a repository with a `marketplace.json`), add an entry pointing at this repository:
 
 ```json
 {
