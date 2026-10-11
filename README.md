@@ -6,14 +6,11 @@ Claude caches the conversation it has already read. Leave a session idle past th
 
 cold-cache puts a band above the prompt once the session has been idle past the threshold. In the desktop app's Code tab:
 
-<img width="845" height="72" alt="image" src="https://github.com/user-attachments/assets/ccfd29a0-2f9f-49cd-8164-6192ca86bff9" />
-
 In the terminal:
 
-```
-❄︎ Cache cold · next message re-reads 342k tokens uncached
-  1: Handoff   2: Compact with Haiku   0: Dismiss
-```
+<img width="845" height="72" alt="image" src="https://github.com/user-attachments/assets/ccfd29a0-2f9f-49cd-8164-6192ca86bff9" />
+
+
 
 - **Handoff** (recommended for long sessions): Claude Haiku reads the conversation and writes a handoff document to your OS temp folder. The band then offers **Clear & continue** (copies the resume prompt, runs `/clear`, and fills `Read the handoff at <path> first.` into the prompt box) or **Copy prompt** (copy only, for picking up in another session or window).
 - **Compact with Haiku**: compacts the conversation in place, with Haiku writing the summary instead of your main model.
