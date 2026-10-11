@@ -21,7 +21,7 @@ const TRANSCRIPT: SessionMessage[] = [
   { role: 'assistant', text: 'The payment iframe races the fill.', toolUses: [] },
 ]
 
-const stubSession = (on: On) => {
+const stubSession = (on: On, sent: string[] = []) => {
   const clock = mock.clock(on, { now: 0 })
   mock.store(on)
   mock.env(on, { TEMP: 'C:\\Temp' })
@@ -33,7 +33,10 @@ const stubSession = (on: On) => {
   on('session.messages', () => ({ value: TRANSCRIPT }))
   on('session.start', (_$, e) => ({ cwd: e.cwd }))
   on('turn.complete', (_$, e) => ({ text: e.answer }))
-  on('prompt.submit', (_$, e) => ({ text: e.text }))
+  on('prompt.submit', (_$, e) => {
+    sent.push(e.text)
+    return { text: e.text }
+  })
   on('ui.render', ($, e) => {
     const { Box } = $.ui.resolve(e)
     return <Box />
@@ -224,4 +227,36 @@ test('a typed /compact is left to the engine', OPTIONS, async ($, on) => {
 
   expect(isEngineCompactorUsed).toBe(true)
   expect(isModelAsked).toBe(false)
+})
+
+test('typing a band hotkey as the whole prompt presses that button instead of sending it', OPTIONS, async ($, on) => {
+  const sent: string[] = []
+  const clock = stubSession(on, sent)
+  const writes: string[] = []
+  on('model.complete', () => ({ value: { isAnswered: true, text: '# Handoff', usage: USAGE } }))
+  on('fs.write', (_$, e) => {
+    writes.push(e.path)
+    return { value: undefined }
+  })
+  await $.session.start({ cwd: '.', surface: 'terminal', isInteractive: true })
+  await finishTurn($)
+  await clock.advance(MINUTE + 15_000)
+
+  const result = await $.prompt.submit({ text: '1', wait: false, origin: { kind: 'composer' } })
+  await clock.settle()
+
+  expect(result.drop).toBeDefined()
+  expect(sent).toEqual([])
+  expect(writes).toHaveLength(1)
+})
+
+test('a hotkey-looking prompt is sent as normal when no band is showing', OPTIONS, async ($, on) => {
+  const sent: string[] = []
+  stubSession(on, sent)
+  await $.session.start({ cwd: '.', surface: 'terminal', isInteractive: true })
+  await finishTurn($)
+
+  await $.prompt.submit({ text: '1', wait: false, origin: { kind: 'composer' } })
+
+  expect(sent).toEqual(['1'])
 })

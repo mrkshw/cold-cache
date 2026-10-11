@@ -100,7 +100,7 @@ Change it in `/config` (the cold-cache row), or in `~/.claude/settings.json`:
 
 ## Using it
 
-- In the terminal, press `1`, `2` or `0` with an empty prompt to press a button; there is no need to focus the band first. `ctrl+x tab` also focuses it.
+- In the terminal, type `1`, `2` or `0` on its own and press Enter: while the band is showing, cold-cache runs that option and the message is never sent to the model. Alternatively, `ctrl+x tab` focuses the band, then the digit presses the button.
 - In the desktop app, click the buttons.
 - The band never appears while Claude is working, and is checked every 15 seconds while the session is idle.
 - A resumed session counts its idle time from the last reply cold-cache saw, so a session you come back to the next day warns you straight away.

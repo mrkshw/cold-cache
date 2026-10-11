@@ -86,7 +86,7 @@ const compactWithHaiku = async ($: Engine) => {
   }
 }
 
-const clearAndContinue = async ($: Engine, surface: RenderSurface, path: string) => {
+const clearAndContinue = async ($: Engine, surface: RenderSurface | undefined, path: string) => {
   const text = resumePrompt(path)
   await $.ui.copy({ text, surface })
   await show($, HIDDEN)
@@ -94,7 +94,7 @@ const clearAndContinue = async ($: Engine, surface: RenderSurface, path: string)
   await $.prompt.fill({ text })
 }
 
-const copyPrompt = async ($: Engine, surface: RenderSurface, path: string) => {
+const copyPrompt = async ($: Engine, surface: RenderSurface | undefined, path: string) => {
   await $.ui.copy({ text: resumePrompt(path), surface })
   await update($, banner, (current) => ({ ...(current ?? HIDDEN), isCopied: true }))
 }
@@ -102,6 +102,22 @@ const copyPrompt = async ($: Engine, surface: RenderSurface, path: string) => {
 const dismiss = async ($: Engine) => {
   await update($, isDismissed, () => true)
   await show($, HIDDEN)
+}
+
+// A terminal user types the band's hotkey and presses Enter; run it instead of sending it to a cold cache.
+const runHotkey = async ($: Engine, key: string) => {
+  const state = await read($, banner)
+  const choice = `${state.phase}:${key}`
+  if (choice === 'cold:1') void writeHandoff($)
+  else if (choice === 'cold:2') void compactWithHaiku($)
+  else if (choice === 'saved:1' && state.path !== null) void clearAndContinue($, undefined, state.path)
+  else if (choice === 'saved:2' && state.path !== null) void copyPrompt($, undefined, state.path)
+  else if (choice === 'failed:1' && state.retry === 'compact') void compactWithHaiku($)
+  else if (choice === 'failed:1') void writeHandoff($)
+  else if (key === '0' && (state.phase === 'cold' || state.phase === 'saved' || state.phase === 'failed'))
+    void dismiss($)
+  else return false
+  return true
 }
 
 export const register: Register = (on, options) => {
@@ -117,6 +133,9 @@ export const register: Register = (on, options) => {
   })
 
   on('prompt.submit', async ($, e, next) => {
+    if (e.origin.kind === 'composer' && (await runHotkey($, e.text.trim()))) {
+      return { drop: 'cold-cache: ran the band option instead of sending the message' }
+    }
     const { phase } = await read($, banner)
     if (phase === 'cold' || phase === 'saved' || phase === 'failed') await show($, HIDDEN)
     await markActive($)

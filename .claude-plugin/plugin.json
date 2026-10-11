@@ -1,6 +1,6 @@
 {
   "name": "cold-cache",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Warns above the prompt when a conversation's prompt cache has gone cold, and offers a Haiku-written handoff or compaction instead of an expensive uncached re-read.",
   "author": { "name": "Mark Shaw" },
   "license": "MIT",
